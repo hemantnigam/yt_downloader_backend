@@ -2,7 +2,7 @@ const express = require("express");
 const itags = require("./constants/itags");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
-const PORT = 5000 || process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
