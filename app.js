@@ -7,6 +7,10 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 
+app.get('/',(req,res)=>{
+  res.send("Youtube downloader api works!!!!")
+})
+
 app.get("/getInfo", (req, res) => {
   let { url } = req.query;
   console.log(url);
