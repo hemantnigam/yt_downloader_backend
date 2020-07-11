@@ -46,10 +46,10 @@ app.get("/getInfo", (req, res) => {
           thumbnailList.thumbnails[thumbnailList.thumbnails.length - 1];
       }
 
-      video = video.filter((video) => {
-        if (itags.includes(video.itag))
-          return video;
-      });
+      // video = video.filter((video) => {
+      //   if (itags.includes(video.itag))
+      //     return video;
+      // });
 
       let data = {
         audioandvideo,
