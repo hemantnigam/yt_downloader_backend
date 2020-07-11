@@ -3,6 +3,11 @@ const itags = require("./constants/itags");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
 const ytpl = require("ytpl");
+const readline = require("readline");
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+const ffmpeg = require("fluent-ffmpeg");
+ffmpeg.setFfmpegPath(ffmpegPath);
+
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -21,9 +26,29 @@ app.get("/playlistInfo", async (req, res) => {
   });
 });
 
+app.get("/downloadAudio", async (req, res) => {
+  let { url } = req.query;
+  let id = ytdl.getURLVideoID(url);
+  let stream = ytdl(id, {
+    quality: "highestaudio",
+  });
+
+  let info = await ytdl.getInfo(id);
+
+  res.setHeader("Content-Type", "audio/mpeg");
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="${info.videoDetails.title}.mp3"`
+  );
+
+  let start = Date.now();
+
+  ffmpeg(stream).format("mp3").audioBitrate(128).pipe(res, { end: true });
+  
+});
+
 app.get("/getInfo", (req, res) => {
   let { url } = req.query;
-  console.log(url);
   let id = ytdl.getURLVideoID(url);
   ytdl.getInfo(id, (err, info) => {
     if (err) {
