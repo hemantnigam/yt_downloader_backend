@@ -47,7 +47,7 @@ app.get("/getInfo", (req, res) => {
       }
 
       video = video.filter((video) => {
-        if (video.container == "mp4" && itags.includes(video.itag))
+        if (itags.includes(video.itag))
           return video;
       });
 
