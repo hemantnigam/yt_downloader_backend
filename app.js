@@ -47,7 +47,7 @@ app.get("/getInfo", (req, res) => {
       }
 
       video = video.filter((video) => {
-        if (itags.includes(video.itag))
+        if (video.container == "mp4" && itags.includes(video.itag))
           return video;
       });
 
@@ -75,10 +75,11 @@ app.get("/downloadVideo", async (req, res) => {
   let videoFormat = ytdl.chooseFormat(info.formats, { quality: String(itag) });
 
   res.setHeader("Content-Type", "video/mp4");
-  res.header(
+  res.setHeader(
     "Content-Disposition",
     `attachment; filename="${info.videoDetails.title}.mp4"`
   );
+  res.setHeader('Content-type', "video/mp4");
   ytdl(videoURL, {
     format: videoFormat,
   }).pipe(res);
