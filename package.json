@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "fluent-ffmpeg": "^2.1.2",
     "nodemon": "^2.0.4",
-    "ytdl-core": "^3.1.2"
+    "ytdl-core": "^3.1.2",
+    "ytpl": "^0.1.22"
   }
 }

@@ -2,14 +2,24 @@ const express = require("express");
 const itags = require("./constants/itags");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
+const ytpl = require("ytpl");
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(cors());
 
-app.get('/',(req,res)=>{
-  res.send("Youtube downloader api works!!!!")
-})
+app.get("/", (req, res) => {
+  res.send("Youtube downloader api works!!!!");
+});
+
+app.get("/playlistInfo", async (req, res) => {
+  const playListID = req.query.playListID;
+  const id = await ytpl.getPlaylistID(playListID);
+  ytpl(id, function (err, playlist) {
+    if (err) throw err;
+    res.send(playlist);
+  });
+});
 
 app.get("/getInfo", (req, res) => {
   let { url } = req.query;
@@ -57,11 +67,8 @@ app.get("/getInfo", (req, res) => {
 });
 
 app.get("/downloadVideo", async (req, res) => {
-
   let videoURL = req.query.url;
-
   let itag = req.query.itag;
-
   let id = ytdl.getURLVideoID(videoURL);
 
   let info = await ytdl.getInfo(id);
