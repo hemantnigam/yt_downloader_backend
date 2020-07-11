@@ -79,7 +79,6 @@ app.get("/downloadVideo", async (req, res) => {
     "Content-Disposition",
     `attachment; filename="${info.videoDetails.title}.mp4"`
   );
-  res.setHeader('Content-type', "video/mp4");
   ytdl(videoURL, {
     format: videoFormat,
   }).pipe(res);
