@@ -13,5 +13,5 @@ This project provide api service to download youtube video, audio and playlist.
 
 ### GET /getInfo
 This endpoint will provide video information in json format.
-#### query params 
+query params 
 <strong>url:</string> youtube video url.
