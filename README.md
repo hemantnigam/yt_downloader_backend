@@ -17,3 +17,28 @@ This endpoint will provide video information in json format.
 {
  url: String
 }
+
+
+### GET /playlistInfo
+This endpoint will provide playlist information in json format.
+##### query params 
+{
+ playListID: String
+}
+
+
+### GET /downloadVideo
+This endpoint will download video.
+##### query params 
+{
+ url: String
+ itag: String(quality label)
+}
+
+
+### GET /downloadAudio
+This endpoint will download audio for a youtube video.
+##### query params 
+{
+ url: String
+}
