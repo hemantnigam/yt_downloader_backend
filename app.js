@@ -6,6 +6,9 @@ const ytpl = require("ytpl");
 const readline = require("readline");
 const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const ffmpeg = require("fluent-ffmpeg");
+const playlists = require("yt-playlist-scraper");
+const dfy = require("dl-from-yt");
+
 ffmpeg.setFfmpegPath(ffmpegPath);
 
 const PORT = process.env.PORT || 5000;
@@ -13,17 +16,17 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cors());
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.send("Youtube downloader api works!!!!");
 });
 
 app.get("/playlistInfo", async (req, res) => {
   const playListID = req.query.playListID;
-  const id = await ytpl.getPlaylistID(playListID);
-  ytpl(id, function (err, playlist) {
-    if (err) throw err;
-    res.send(playlist);
-  });
+  playlists(playListID)
+    .then((playListData) => {
+      res.send(playListData);
+    })
+    .catch((err) => console.log(err));
 });
 
 app.get("/downloadAudio", async (req, res) => {
@@ -44,7 +47,6 @@ app.get("/downloadAudio", async (req, res) => {
   let start = Date.now();
 
   ffmpeg(stream).format("mp3").audioBitrate(128).pipe(res, { end: true });
-  
 });
 
 app.get("/getInfo", (req, res) => {
