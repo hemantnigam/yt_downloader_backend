@@ -6,7 +6,7 @@ const ytpl = require("ytpl");
 const readline = require("readline");
 const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const ffmpeg = require("fluent-ffmpeg");
-const playlists = require("yt-playlist-scraper");
+const ytfps = require('ytfps');
 const dfy = require("dl-from-yt");
 
 ffmpeg.setFfmpegPath(ffmpegPath);
@@ -22,7 +22,7 @@ app.get("/", async (req, res) => {
 
 app.get("/playlistInfo", async (req, res) => {
   const playListID = req.query.playListID;
-  playlists(playListID)
+  ytfps(playListID)
     .then((playListData) => {
       res.send(playListData);
     })

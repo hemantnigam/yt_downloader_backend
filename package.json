@@ -16,8 +16,8 @@
     "express": "^4.17.1",
     "fluent-ffmpeg": "^2.1.2",
     "nodemon": "^2.0.4",
-    "yt-playlist-scraper": "^1.0.1",
     "ytdl-core": "^4.11.0",
+    "ytfps": "^1.0.6",
     "ytpl": "^0.1.22"
   }
 }
