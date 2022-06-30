@@ -49,14 +49,12 @@ app.get("/downloadAudio", async (req, res) => {
   ffmpeg(stream).format("mp3").audioBitrate(128).pipe(res, { end: true });
 });
 
-app.get("/getInfo", (req, res) => {
+app.get("/getInfo", async (req, res) => {
   let { url } = req.query;
   let id = ytdl.getURLVideoID(url);
-  ytdl.getInfo(id, (err, info) => {
-    if (err) {
-      console.log(err);
-      throw err;
-    } else {
+
+  try {
+      const info = await ytdl.getInfo(id);
       let audioandvideo = ytdl.filterFormats(info.formats, "audioandvideo");
       let videoonly = ytdl.filterFormats(info.formats, "videoonly");
       let video = ytdl.filterFormats(info.formats, "video");
@@ -89,8 +87,9 @@ app.get("/getInfo", (req, res) => {
       res.setHeader("Content-Type", "application/json");
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.send(data);
-    }
-  });
+  } catch(err) {
+    console.error(err);
+  }
 });
 
 app.get("/downloadVideo", async (req, res) => {
